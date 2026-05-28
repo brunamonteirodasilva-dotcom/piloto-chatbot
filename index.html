@@ -1,0 +1,195 @@
+<!doctype html>
+<html lang="pt-br">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Ensino e Pesquisa — Simulação</title>
+  <style>
+    :root{
+      --text:#1f2937;
+      --muted:#6b7280;
+      --line:#e5e7eb;
+      --bg:#ffffff;
+      --link:#0b5fa5;
+      --govBlue:#1351b4;
+      --cardBg:#f5f5f5;
+      --cardShadow:0 2px 10px rgba(0,0,0,.06);
+    }
+    *{box-sizing:border-box}
+    body{ margin:0; font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; color:var(--text); background: var(--bg); }
+
+    .topbar{ width:100%; border-bottom:1px solid var(--line); background:#fff; }
+    .topbar-inner{ max-width:1200px; margin:0 auto; padding:14px 16px; display:flex; align-items:center; gap:18px; }
+    .govbrand{ display:flex; align-items:center; gap:12px; min-width:160px; }
+    .govlogo{ font-weight:800; font-size:30px; letter-spacing:-.5px; line-height:1; }
+    .govlogo .g{color:#1a73e8} .govlogo .o{color:#34a853} .govlogo .v{color:#fbbc05} .govlogo .br{color:#1a73e8}
+    .govdivider{ width:1px;height:34px;background:var(--line); }
+    .toplinks{ display:flex; gap:16px; flex:1; align-items:center; flex-wrap:wrap; }
+    .toplinks a{ font-size:13px; color:#1f5fa5; text-decoration:none; white-space:nowrap; }
+    .toplinks a:hover{ text-decoration:underline; }
+    .top-right{ display:flex; align-items:center; gap:10px; }
+    .icon{ width:28px;height:28px; display:grid;place-items:center; border-radius:999px; color:#111827; }
+    .icon:hover{ background:#f3f4f6; }
+    .signin{ display:flex; align-items:center; gap:8px; border:0; background:var(--govBlue); color:white; padding:10px 14px; border-radius:999px; font-weight:600; cursor:pointer; white-space:nowrap; }
+    .signin svg{fill:white}
+    .signin:hover{ filter:brightness(.95); }
+
+    .subbar{ border-bottom:1px solid var(--line); background:#fff; }
+    .subbar-inner{ max-width:1200px; margin:0 auto; padding:14px 16px; display:flex; align-items:center; justify-content:space-between; gap:14px; }
+    .hubrasil{ display:flex; align-items:center; gap:10px; font-size:22px; font-weight:500; color:#111827; }
+    .hamburger{ width:26px;height:26px; display:grid;place-items:center; color:#111827; }
+    .search{ width:min(560px, 58vw); display:flex; align-items:center; background:#f3f4f6; border:1px solid #e5e7eb; border-radius:8px; padding:10px 12px; gap:10px; }
+    .search input{ border:0; outline:none; background:transparent; width:100%; font-size:14px; }
+    .search .sicon{ width:32px;height:32px; display:grid;place-items:center; border-radius:8px; color:#0f172a; }
+    .search .sicon:hover{ background:#e5e7eb; }
+
+    .container{ max-width:1200px; margin:0 auto; padding:16px 16px 60px; }
+    .breadcrumbs{ display:flex; align-items:center; gap:8px; font-size:12px; color:var(--muted); margin-top:4px; flex-wrap:wrap; }
+    .breadcrumbs a{ color:var(--link); text-decoration:none; }
+    .breadcrumbs a:hover{ text-decoration:underline; }
+    .crumb-sep{ color:#9ca3af; }
+    h1{ margin:16px 0 14px; font-size:34px; font-weight:600; color:#0f172a; }
+    .rule{ height:1px; background:var(--line); margin:12px 0 26px; }
+
+    .grid{ display:grid; grid-template-columns: repeat(4, 1fr); gap:28px; justify-items:center; }
+    .grid-bottom{ margin-top:26px; display:grid; grid-template-columns: repeat(3, 1fr); gap:28px; justify-items:center; max-width: calc(240px*3 + 28px*2); margin-left:auto; margin-right:auto; }
+
+    a.card{ text-decoration:none; }
+    .card{
+      width:100%;
+      max-width:240px;
+      height:150px;
+      background:var(--cardBg);
+      border:1px solid #ececec;
+      border-radius:2px;
+      box-shadow: var(--cardShadow);
+      display:grid;
+      place-items:center;
+      text-align:center;
+      padding:18px;
+      cursor:pointer;
+      user-select:none;
+      transition: transform .12s ease, box-shadow .12s ease;
+    }
+    .card span{ color:#1f5fa5; font-size:16px; font-weight:500; line-height:1.25; }
+    .card:hover{ transform: translateY(-1px); box-shadow: 0 6px 18px rgba(0,0,0,.08); }
+
+    @media (max-width: 1050px){
+      .grid{ grid-template-columns: repeat(2, 1fr); }
+      .grid-bottom{ grid-template-columns: repeat(2, 1fr); max-width: calc(240px*2 + 28px); }
+    }
+    @media (max-width: 640px){
+      .toplinks{ display:none; }
+      .search{ width: 100%; }
+      .subbar-inner{ flex-direction:column; align-items:stretch; }
+      .grid, .grid-bottom{ grid-template-columns: 1fr; max-width: 240px; }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="topbar">
+    <div class="topbar-inner">
+      <div class="govbrand">
+        <div class="govlogo" aria-label="gov.br">
+          <span class="g">g</span><span class="o">o</span><span class="v">v</span><span class="br">.br</span>
+        </div>
+        <div class="govdivider"></div>
+      </div>
+
+      <nav class="toplinks" aria-label="Links do topo">
+        <a href="#">Ministério da Educação</a>
+        <a href="#">Órgãos do Governo</a>
+        <a href="#">Acesso à informação</a>
+        <a href="#">Legislação</a>
+        <a href="#">Acessibilidade</a>
+      </nav>
+
+      <div class="top-right">
+        <div class="icon" title="Contraste">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+            <path d="M12 2a10 10 0 1 0 0 20V2z" fill="#111827"/>
+          </svg>
+        </div>
+        <div class="icon" title="Idioma">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+            <path d="M12 2a10 10 0 1 0 0 20a10 10 0 0 0 0-20Z" stroke="#111827" stroke-width="2"/>
+            <path d="M2 12h20" stroke="#111827" stroke-width="2"/>
+            <path d="M12 2c3 3 3 17 0 20" stroke="#111827" stroke-width="2"/>
+          </svg>
+        </div>
+        <div class="icon" title="Apps">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="#111827">
+            <path d="M4 4h6v6H4zM14 4h6v6h-6zM4 14h6v6H4zM14 14h6v6h-6z"/>
+          </svg>
+        </div>
+
+        <button class="signin" type="button">
+          <svg width="16" height="16" viewBox="0 0 24 24">
+            <path d="M12 12a5 5 0 1 0-5-5a5 5 0 0 0 5 5Zm0 2c-4.42 0-8 2.24-8 5v1h16v-1c0-2.76-3.58-5-8-5Z"/>
+          </svg>
+          Entrar com gov.br
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div class="subbar">
+    <div class="subbar-inner">
+      <div class="hubrasil">
+        <div class="hamburger" aria-label="Menu">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="#111827">
+            <path d="M3 6h18v2H3zM3 11h18v2H3zM3 16h18v2H3z"/>
+          </svg>
+        </div>
+        HU Brasil
+      </div>
+
+      <div class="search" role="search">
+        <input placeholder="O que você procura?" aria-label="Busca" />
+        <div class="sicon" title="Microfone">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="#111827">
+            <path d="M12 14a3 3 0 0 0 3-3V6a3 3 0 0 0-6 0v5a3 3 0 0 0 3 3Zm5-3a5 5 0 0 1-10 0H5a7 7 0 0 0 6 6.92V21h2v-3.08A7 7 0 0 0 19 11h-2Z"/>
+          </svg>
+        </div>
+        <div class="sicon" title="Pesquisar">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="#111827">
+            <path d="M10 18a8 8 0 1 1 5.293-14.293A8 8 0 0 1 10 18Zm11 3-6-6 1.414-1.414 6 6L21 21Z"/>
+          </svg>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <main class="container">
+    <div class="breadcrumbs">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="#1f5fa5">
+        <path d="M12 3 2 12h3v9h6v-6h2v6h6v-9h3L12 3Z"/>
+      </svg>
+      <a href="#">Hospitais Universitários</a>
+      <span class="crumb-sep">›</span>
+      <a href="#">Região Norte</a>
+      <span class="crumb-sep">›</span>
+      <a href="#">HUGV-Ufam - Hospital Universitário Getúlio Vargas</a>
+      <span class="crumb-sep">›</span>
+      <span>Ensino e Pesquisa</span>
+    </div>
+
+    <h1>Ensino e Pesquisa</h1>
+    <div class="rule"></div>
+
+    <section class="grid" aria-label="Cartões principais">
+      <a class="card" href="./apresentacao.html"><span>Apresentação</span></a>
+      <a class="card" href="./residencia-medica.html"><span>Residência Médica</span></a>
+      <a class="card" href="./residencia-multidisciplinar.html"><span>Residência<br/>Multidisciplinar</span></a>
+      <a class="card" href="./graduacao.html"><span>Graduação</span></a>
+    </section>
+
+    <section class="grid-bottom" aria-label="Cartões secundários">
+      <a class="card" href="./gestao-pesquisa-inovacao.html"><span>Gestão da Pesquisa e<br/>Inovação Tecnológica<br/>em Saúde</span></a>
+      <a class="card" href="./relatorio-gestao-ensino-pesquisa.html"><span>Relatório de Gestão de<br/>Ensino e Pesquisa</span></a>
+      <a class="card" href="./fluxos-descritivos.html"><span>Fluxos Descritivos</span></a>
+    </section>
+  </main>
+</body>
+</html>

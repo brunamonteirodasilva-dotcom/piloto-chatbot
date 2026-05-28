@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="pt-br">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Residência Multidisciplinar — Simulação</title>
+  <style>
+    :root{ --text:#1f2937; --muted:#6b7280; --line:#e5e7eb; --link:#0b5fa5; --govBlue:#1351b4; }
+    *{box-sizing:border-box}
+    body{ margin:0; font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; color:var(--text); background:#fff; }
+    .topbar{ width:100%; border-bottom:1px solid var(--line); background:#fff; }
+    .topbar-inner{ max-width:1200px; margin:0 auto; padding:14px 16px; display:flex; align-items:center; gap:18px; }
+    .govlogo{ font-weight:800; font-size:30px; letter-spacing:-.5px; line-height:1; }
+    .govlogo .g{color:#1a73e8} .govlogo .o{color:#34a853} .govlogo .v{color:#fbbc05} .govlogo .br{color:#1a73e8}
+    .signin{ margin-left:auto; border:0; background:var(--govBlue); color:#fff; padding:10px 14px; border-radius:999px; font-weight:600; }
+    .container{ max-width:1200px; margin:0 auto; padding:18px 16px 60px; }
+    .breadcrumbs{ display:flex; align-items:center; gap:8px; font-size:12px; color:var(--muted); margin-top:4px; flex-wrap:wrap; }
+    .breadcrumbs a{ color:var(--link); text-decoration:none; }
+    .breadcrumbs a:hover{ text-decoration:underline; }
+    .crumb-sep{ color:#9ca3af; }
+    h1{ margin:14px 0 10px; font-size:34px; font-weight:600; color:#0f172a; }
+    .rule{ height:1px; background:var(--line); margin:12px 0 18px; }
+    .card{ border:1px solid var(--line); border-radius:12px; padding:16px; background:#fafafa; }
+    .btn{ display:inline-block; margin-top:12px; padding:10px 14px; border-radius:10px; border:1px solid #d7d7d7; background:#fff; color:#111827; text-decoration:none; }
+    .btn:hover{ background:#f3f4f6; }
+    .hint{ color:var(--muted); font-size:13px; line-height:1.45; }
+  </style>
+</head>
+<body>
+  <div class="topbar">
+    <div class="topbar-inner">
+      <div class="govlogo" aria-label="gov.br">
+        <span class="g">g</span><span class="o">o</span><span class="v">v</span><span class="br">.br</span>
+      </div>
+      <button class="signin" type="button">Entrar com gov.br</button>
+    </div>
+  </div>
+
+  <main class="container">
+    <div class="breadcrumbs">
+      <a href="./index.html">Ensino e Pesquisa</a>
+      <span class="crumb-sep">›</span>
+      <span>Residência Multidisciplinar</span>
+    </div>
+
+    <h1>Residência Multidisciplinar</h1>
+    <div class="rule"></div>
+
+    <div class="card">
+      <p class="hint">
+        Esta é uma página interna do piloto. Você pode colocar aqui o conteúdo real (texto, links, PDFs, formulário)
+        e/ou o botão para abrir o <strong>chatbot</strong>.
+      </p>
+
+      <!-- Exemplo de CTA para o futuro chat -->
+      <a class="btn" href="#" onclick="alert('Aqui você pode abrir o chatbot (piloto).'); return false;">
+        Abrir Chatbot (piloto)
+      </a>
+
+      <br/>
+      <a class="btn" href="./index.html">Voltar</a>
+    </div>
+  </main>
+</body>
+</html>
