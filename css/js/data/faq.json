@@ -1,0 +1,182 @@
+{
+"categorias": [
+{
+"nome": "Pesquisa",
+"perguntas": [
+{
+"pergunta": "Como fazer pesquisa no HUGV?",
+"resposta": "Para realizar pesquisa no HUGV-UFAM é necessário cadastrar o projeto na Rede Pesquisa Ebserh e submetê-lo para avaliação da Gerência de Ensino e Pesquisa."
+},
+{
+"pergunta": "O que é a Rede Pesquisa?",
+"resposta": "É o sistema oficial da Ebserh utilizado para autorização, acompanhamento e gestão de pesquisas nos Hospitais Universitários."
+},
+{
+"pergunta": "Quem pode submeter projetos?",
+"resposta": "Pesquisadores com formação superior e qualificação compatível com a área da pesquisa."
+},
+{
+"pergunta": "Aluno de graduação pode cadastrar projeto?",
+"resposta": "Não. O cadastro deve ser realizado pelo orientador."
+},
+{
+"pergunta": "Quais documentos devo anexar?",
+"resposta": "Projeto de Pesquisa, Resumo Executivo, TCLE, Cronograma, Planilha Orçamentária, TCUD e Termo de Compromisso do Pesquisador."
+}
+]
+},
+
+{
+  "nome": "CEP_CONEP",
+  "perguntas": [
+    {
+      "pergunta": "Meu projeto precisa passar pelo CEP?",
+      "resposta": "Projetos envolvendo seres humanos devem ser submetidos ao Comitê de Ética em Pesquisa."
+    },
+    {
+      "pergunta": "Posso iniciar a coleta de dados antes da aprovação ética?",
+      "resposta": "Não. A pesquisa somente pode iniciar após aprovação do CEP."
+    },
+    {
+      "pergunta": "O que é o CEP?",
+      "resposta": "É o Comitê de Ética em Pesquisa responsável pela análise ética dos projetos."
+    },
+    {
+      "pergunta": "O que é a CONEP?",
+      "resposta": "É a Comissão Nacional de Ética em Pesquisa."
+    }
+  ]
+},
+
+{
+  "nome": "Plataforma_Brasil",
+  "perguntas": [
+    {
+      "pergunta": "O que é a Plataforma Brasil?",
+      "resposta": "É o sistema nacional utilizado para submissão e acompanhamento de pesquisas envolvendo seres humanos."
+    },
+    {
+      "pergunta": "Qual o CNPJ do HUGV?",
+      "resposta": "15.126.437/0011-15."
+    },
+    {
+      "pergunta": "Como vincular o HUGV na Plataforma Brasil?",
+      "resposta": "Utilize o CNPJ 15.126.437/0011-15 no cadastro."
+    }
+  ]
+},
+
+{
+  "nome": "RedCap",
+  "perguntas": [
+    {
+      "pergunta": "O que é o RedCap?",
+      "resposta": "Sistema eletrônico para coleta e gerenciamento de dados de pesquisa."
+    },
+    {
+      "pergunta": "Posso usar o RedCap para meu estudo?",
+      "resposta": "Sim, desde que autorizado institucionalmente."
+    }
+  ]
+},
+
+{
+  "nome": "Pesquisa_Clinica",
+  "perguntas": [
+    {
+      "pergunta": "O que é pesquisa clínica?",
+      "resposta": "Pesquisa envolvendo participantes humanos para avaliação de intervenções, tratamentos ou observações clínicas."
+    },
+    {
+      "pergunta": "Toda pesquisa clínica precisa de aprovação ética?",
+      "resposta": "Sim."
+    }
+  ]
+},
+
+{
+  "nome": "Inovacao",
+  "perguntas": [
+    {
+      "pergunta": "O que é inovação tecnológica em saúde?",
+      "resposta": "É o desenvolvimento de produtos, processos ou serviços inovadores aplicados à saúde."
+    },
+    {
+      "pergunta": "Tenho uma inovação. O que faço?",
+      "resposta": "Procure a Gestão da Pesquisa e Inovação Tecnológica em Saúde para avaliação."
+    }
+  ]
+},
+
+{
+  "nome": "Patentes",
+  "perguntas": [
+    {
+      "pergunta": "O que é uma patente?",
+      "resposta": "É um título de proteção concedido para uma invenção."
+    },
+    {
+      "pergunta": "Posso divulgar antes de patentear?",
+      "resposta": "Não é recomendado."
+    }
+  ]
+},
+
+{
+  "nome": "Editais",
+  "perguntas": [
+    {
+      "pergunta": "O que é o PIC?",
+      "resposta": "Programa de Iniciação Científica da HU Brasil."
+    },
+    {
+      "pergunta": "O que é o PIT?",
+      "resposta": "Programa de Iniciação Tecnológica da HU Brasil."
+    },
+    {
+      "pergunta": "O que é o PAIC?",
+      "resposta": "Programa de Apoio à Iniciação Científica do HUGV."
+    }
+  ]
+},
+
+{
+  "nome": "Fluxos",
+  "perguntas": [
+    {
+      "pergunta": "Qual o fluxo para submissão de pesquisa?",
+      "resposta": "Credenciamento → Cadastro na Rede Pesquisa → Avaliação institucional → CEP quando aplicável → Autorização."
+    }
+  ]
+},
+
+{
+  "nome": "Indicadores",
+  "perguntas": [
+    {
+      "pergunta": "Quais indicadores de pesquisa são acompanhados?",
+      "resposta": "Projetos ativos, publicações, bolsas, captação de recursos e inovação."
+    }
+  ]
+},
+
+{
+  "nome": "Contato",
+  "perguntas": [
+    {
+      "pergunta": "Qual o telefone do setor?",
+      "resposta": "(92) 3305-4797"
+    },
+    {
+      "pergunta": "Qual o e-mail do setor?",
+      "resposta": "sgpits.hugv-ufam@hubrasil.gov.br"
+    },
+    {
+      "pergunta": "Como falar com a Gestão da Pesquisa?",
+      "resposta": "Telefone: (92) 3305-4797 | E-mail: sgpits.hugv-ufam@hubrasil.gov.br"
+    }
+  ]
+}
+
+]
+}
