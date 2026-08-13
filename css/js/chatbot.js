@@ -1,5 +1,9 @@
 document.addEventListener("DOMContentLoaded", function () {
 
+  /* =========================================================
+     ELEMENTOS DO CHAT
+     ========================================================= */
+
   const chatButton = document.getElementById("chatButton");
   const chatWindow = document.getElementById("chatWindow");
   const closeChat = document.getElementById("closeChat");
@@ -9,245 +13,377 @@ document.addEventListener("DOMContentLoaded", function () {
   const sendMessage = document.getElementById("sendMessage");
 
 
-  /* ===============================
+  /* =========================================================
      ABRIR CHAT
-  =============================== */
+     ========================================================= */
 
   function abrirChat() {
+    if (!chatWindow) return;
+
     chatWindow.style.display = "flex";
-    chatInput.focus();
+
+    if (chatInput) {
+      setTimeout(function () {
+        chatInput.focus();
+      }, 100);
+    }
   }
 
 
-  /* ===============================
+  /* =========================================================
      FECHAR CHAT
-  =============================== */
+     ========================================================= */
 
   function fecharChat() {
+    if (!chatWindow) return;
+
     chatWindow.style.display = "none";
   }
 
 
-  chatButton.addEventListener("click", abrirChat);
-
-  chatButton.addEventListener("keydown", function (event) {
-
-    if (event.key === "Enter" || event.key === " ") {
-      event.preventDefault();
-      abrirChat();
-    }
-
-  });
-
-
-  closeChat.addEventListener("click", fecharChat);
-
-
-  /* ===============================
-     BASE DE PERGUNTAS E RESPOSTAS
-  =============================== */
-
-  const respostas = [
-
-    {
-      perguntas: [
-        "o que é a gep",
-        "o que é gep",
-        "gerência de ensino e pesquisa",
-        "ensino e pesquisa"
-      ],
-
-      resposta:
-        "A Gerência de Ensino e Pesquisa (GEP) é responsável pela gestão das atividades relacionadas ao ensino, à pesquisa e à inovação tecnológica em saúde no HUGV."
-    },
-
-
-    {
-      perguntas: [
-        "como fazer pesquisa",
-        "como iniciar uma pesquisa",
-        "quero fazer uma pesquisa",
-        "pesquisa no hugv"
-      ],
-
-      resposta:
-        "Para iniciar uma pesquisa no HUGV, é necessário verificar o fluxo institucional aplicável ao projeto e observar os requisitos éticos e administrativos pertinentes. Consulte a seção de Gestão da Pesquisa e Inovação Tecnológica em Saúde para conhecer os fluxos."
-    },
-
-
-    {
-      perguntas: [
-        "residência médica",
-        "como funciona a residência médica",
-        "residência"
-      ],
-
-      resposta:
-        "As informações sobre Residência Médica estão disponíveis na área específica de Ensino e Pesquisa. Acesse o cartão 'Residência Médica' para consultar as informações disponíveis."
-    },
-
-
-    {
-      perguntas: [
-        "residência multiprofissional",
-        "residência multidisciplinar",
-        "residência multiprofissional no hugv"
-      ],
-
-      resposta:
-        "As informações sobre a Residência Multiprofissional estão disponíveis na área específica de Ensino e Pesquisa. Acesse o cartão 'Residência Multidisciplinar'."
-    },
-
-
-    {
-      perguntas: [
-        "graduação",
-        "estágio de graduação",
-        "graduação no hugv"
-      ],
-
-      resposta:
-        "As informações relacionadas à Graduação estão disponíveis na seção de Ensino e Pesquisa. Acesse o cartão 'Graduação' para consultar as informações."
-    },
-
-
-    {
-      perguntas: [
-        "fluxos",
-        "fluxo de pesquisa",
-        "fluxos descritivos"
-      ],
-
-      resposta:
-        "Os Fluxos Descritivos apresentam os procedimentos e caminhos institucionais relacionados às atividades de Ensino e Pesquisa. Acesse o cartão 'Fluxos Descritivos'."
-    },
-
-
-    {
-      perguntas: [
-        "relatório de gestão",
-        "relatório de ensino e pesquisa"
-      ],
-
-      resposta:
-        "O Relatório de Gestão de Ensino e Pesquisa reúne informações relacionadas às atividades e resultados da área. Você pode acessá-lo pelo cartão 'Relatório de Gestão de Ensino e Pesquisa'."
-    }
-
-  ];
-
-
-  /* ===============================
+  /* =========================================================
      NORMALIZAR TEXTO
-  =============================== */
+     
+     Remove acentos, coloca tudo em minúsculas
+     e elimina diferenças de pontuação.
+     ========================================================= */
 
-  function normalizar(texto) {
+  function normalizarTexto(texto) {
 
     return texto
       .toLowerCase()
       .normalize("NFD")
       .replace(/[\u0300-\u036f]/g, "")
+      .replace(/[^\w\s]/g, " ")
+      .replace(/\s+/g, " ")
       .trim();
 
   }
 
 
-  /* ===============================
-     PROCURAR RESPOSTA
-  =============================== */
+  /* =========================================================
+     CALCULAR SIMILARIDADE ENTRE PERGUNTA E FRASE
+     ========================================================= */
 
-  function encontrarResposta(pergunta) {
+  function calcularPontuacao(pergunta, frase) {
 
-    const texto = normalizar(pergunta);
+    const perguntaNormalizada = normalizarTexto(pergunta);
+    const fraseNormalizada = normalizarTexto(frase);
 
-    for (const item of respostas) {
+    if (!perguntaNormalizada || !fraseNormalizada) {
+      return 0;
+    }
 
-      for (const perguntaCadastrada of item.perguntas) {
+    /* Correspondência exata */
 
-        const termo = normalizar(perguntaCadastrada);
+    if (perguntaNormalizada === fraseNormalizada) {
+      return 100;
+    }
 
-        if (
-          texto === termo ||
-          texto.includes(termo) ||
-          termo.includes(texto)
-        ) {
+    /* Uma frase contém a outra */
 
-          return item.resposta;
+    if (
+      perguntaNormalizada.includes(fraseNormalizada) ||
+      fraseNormalizada.includes(perguntaNormalizada)
+    ) {
+      return 80;
+    }
 
-        }
+    /* Comparação por palavras */
 
+    const palavrasPergunta = perguntaNormalizada
+      .split(" ")
+      .filter(palavra => palavra.length >= 3);
+
+    const palavrasFrase = fraseNormalizada
+      .split(" ")
+      .filter(palavra => palavra.length >= 3);
+
+    if (palavrasPergunta.length === 0) {
+      return 0;
+    }
+
+    let palavrasEncontradas = 0;
+
+    palavrasPergunta.forEach(function (palavra) {
+
+      if (palavrasFrase.includes(palavra)) {
+        palavrasEncontradas++;
       }
+
+    });
+
+    const percentual =
+      (palavrasEncontradas / palavrasPergunta.length) * 100;
+
+    return percentual;
+
+  }
+
+
+  /* =========================================================
+     PROCURAR RESPOSTA NO CONHECIMENTO
+     ========================================================= */
+
+  function procurarResposta(pergunta) {
+
+    if (
+      typeof conhecimento === "undefined" ||
+      !Array.isArray(conhecimento)
+    ) {
+
+      console.error(
+        "A base conhecimento.js não foi carregada."
+      );
+
+      return {
+        resposta:
+          "No momento, minha base de conhecimento não está disponível. Por favor, tente novamente mais tarde.",
+        encontrada: false
+      };
 
     }
 
 
-    return (
-      "Ainda não encontrei uma resposta cadastrada para essa pergunta. " +
-      "Tente utilizar outros termos ou procure a informação nas áreas de Ensino e Pesquisa."
-    );
+    let melhorResultado = null;
+    let melhorPontuacao = 0;
+
+
+    /* Percorre todos os temas */
+
+    conhecimento.forEach(function (item) {
+
+      if (!item.perguntas || !Array.isArray(item.perguntas)) {
+        return;
+      }
+
+
+      item.perguntas.forEach(function (perguntaCadastrada) {
+
+        const pontuacao =
+          calcularPontuacao(pergunta, perguntaCadastrada);
+
+
+        if (pontuacao > melhorPontuacao) {
+
+          melhorPontuacao = pontuacao;
+
+          melhorResultado = item;
+
+        }
+
+      });
+
+    });
+
+
+    /*
+       45% é o limite mínimo para considerar
+       que encontramos uma pergunta relacionada.
+    */
+
+    if (melhorResultado && melhorPontuacao >= 45) {
+
+      return {
+        resposta: melhorResultado.resposta,
+        encontrada: true,
+        tema: melhorResultado.tema,
+        pontuacao: melhorPontuacao
+      };
+
+    }
+
+
+    /* =====================================================
+       RESPOSTA PADRÃO
+       ===================================================== */
+
+    return {
+
+      resposta:
+        "Ainda não encontrei uma resposta cadastrada para essa pergunta. Tente utilizar outros termos ou procure a informação nas áreas de Ensino e Pesquisa.",
+
+      encontrada: false
+
+    };
 
   }
 
 
-  /* ===============================
-     ADICIONAR MENSAGEM NA TELA
-  =============================== */
+  /* =========================================================
+     ADICIONAR MENSAGEM DO USUÁRIO
+     ========================================================= */
 
-  function adicionarMensagem(texto, tipo) {
+  function adicionarMensagemUsuario(texto) {
+
+    if (!chatMessages) return;
+
 
     const mensagem = document.createElement("div");
 
-    mensagem.className =
-      tipo === "usuario"
-        ? "userMessage"
-        : "botMessage";
+    mensagem.className = "userMessage";
 
     mensagem.textContent = texto;
 
+
     chatMessages.appendChild(mensagem);
 
-    chatMessages.scrollTop = chatMessages.scrollHeight;
+    rolarChatParaBaixo();
 
   }
 
 
-  /* ===============================
-     ENVIAR PERGUNTA
-  =============================== */
+  /* =========================================================
+     ADICIONAR MENSAGEM DO ASSISTENTE
+     ========================================================= */
 
-  function enviarPergunta() {
+  function adicionarMensagemAssistente(texto) {
+
+    if (!chatMessages) return;
+
+
+    const mensagem = document.createElement("div");
+
+    mensagem.className = "botMessage";
+
+    mensagem.textContent = texto;
+
+
+    chatMessages.appendChild(mensagem);
+
+    rolarChatParaBaixo();
+
+  }
+
+
+  /* =========================================================
+     ROLAR CHAT PARA BAIXO
+     ========================================================= */
+
+  function rolarChatParaBaixo() {
+
+    if (!chatMessages) return;
+
+    chatMessages.scrollTop =
+      chatMessages.scrollHeight;
+
+  }
+
+
+  /* =========================================================
+     PROCESSAR PERGUNTA
+     ========================================================= */
+
+  function processarPergunta() {
+
+    if (!chatInput) return;
+
 
     const pergunta = chatInput.value.trim();
+
+
+    /* Não enviar mensagem vazia */
 
     if (!pergunta) {
       return;
     }
 
 
-    adicionarMensagem(pergunta, "usuario");
+    /* Mostra pergunta do usuário */
+
+    adicionarMensagemUsuario(pergunta);
+
+
+    /* Limpa campo */
 
     chatInput.value = "";
 
-    const resposta = encontrarResposta(pergunta);
 
+    /*
+       Pequeno atraso para deixar a conversa
+       mais natural.
+    */
 
     setTimeout(function () {
 
-      adicionarMensagem(resposta, "bot");
+      const resultado =
+        procurarResposta(pergunta);
+
+
+      adicionarMensagemAssistente(
+        resultado.resposta
+      );
+
 
     }, 300);
 
   }
 
 
-  sendMessage.addEventListener("click", enviarPergunta);
+  /* =========================================================
+     EVENTO DO BOTÃO FLUTUANTE
+     ========================================================= */
+
+  if (chatButton) {
+
+    chatButton.addEventListener(
+      "click",
+      abrirChat
+    );
+
+  }
 
 
-  chatInput.addEventListener("keydown", function (event) {
+  /* =========================================================
+     EVENTO DO BOTÃO FECHAR
+     ========================================================= */
 
-    if (event.key === "Enter") {
-      enviarPergunta();
-    }
+  if (closeChat) {
 
-  });
+    closeChat.addEventListener(
+      "click",
+      fecharChat
+    );
+
+  }
+
+
+  /* =========================================================
+     EVENTO DO BOTÃO ENVIAR
+     ========================================================= */
+
+  if (sendMessage) {
+
+    sendMessage.addEventListener(
+      "click",
+      processarPergunta
+    );
+
+  }
+
+
+  /* =========================================================
+     ENVIAR COM ENTER
+     ========================================================= */
+
+  if (chatInput) {
+
+    chatInput.addEventListener(
+      "keydown",
+      function (event) {
+
+        if (event.key === "Enter") {
+
+          event.preventDefault();
+
+          processarPergunta();
+
+        }
+
+      }
+    );
+
+  }
+
 
 });
